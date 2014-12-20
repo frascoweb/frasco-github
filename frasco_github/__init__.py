@@ -14,7 +14,7 @@ class GithubFeature(Feature):
 
     def init_app(self, app):
         self.app = app
-        self.github = app.features.users.create_oauth_app("github",
+        self.api = app.features.users.create_oauth_app("github",
             base_url='https://api.github.com/',
             request_token_url=None,
             access_token_method='POST',
@@ -25,7 +25,7 @@ class GithubFeature(Feature):
             request_token_params={'scope': self.options['scope']},
             login_view="github_login.login")
 
-        @self.github.tokengetter
+        @self.api.tokengetter
         def token_getter():
             if not current_user.is_authenticated() or not current_user.github_access_token:
                 return
