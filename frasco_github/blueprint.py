@@ -23,9 +23,9 @@ def create_blueprint(app):
         attrs = {"github_access_token": resp['access_token'],
                  "github_username": me.data['login'],
                  "github_id": str(me.data['id']),
-                 "github_email": me.data['email']}
+                 "github_email": me.data.get('email')}
         defaults = {}
-        if feature.options["use_email"]:
+        if feature.options["use_email"] and 'email' in me.data:
             defaults[users.options["email_column"]] = me.data['email']
         if feature.options["use_username"]:
             defaults[users.options["username_column"]] = me.data['login']
