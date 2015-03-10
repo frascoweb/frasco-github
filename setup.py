@@ -13,7 +13,6 @@ setup(
     zip_safe=False,
     platforms='any',
     install_requires=[
-        # 'frasco',
-        # 'frasco-users'
+        'frasco-users'
     ]
 )
