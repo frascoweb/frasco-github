@@ -7,7 +7,7 @@ class GithubFeature(Feature):
     name = "github"
     requires = ["users"]
     blueprints = [create_blueprint]
-    defaults = {"use_username": False,
+    defaults = {"use_username": True,
                 "use_email": True,
                 "scope": 'user:email',
                 "user_denied_login_message": lazy_translate("Login via Github was denied")}

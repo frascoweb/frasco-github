@@ -10,7 +10,10 @@ def create_blueprint(app):
     @bp.route('/login/github')
     def login():
         callback_url = url_for('.callback', next=request.args.get('next'), _external=True)
-        return feature.api.authorize(callback=callback_url)
+        kwargs = {}
+        if 'scope' in request.args:
+            kwargs['scope'] = request.args['scope']
+        return feature.api.authorize(callback=callback_url, **kwargs)
 
     @bp.route('/login/github/callback')
     def callback():
@@ -27,7 +30,7 @@ def create_blueprint(app):
         defaults = {}
         if feature.options["use_email"] and 'email' in me.data:
             defaults[users.options["email_column"]] = me.data['email']
-        if feature.options["use_username"]:
+        if feature.options["use_username"] and users.options['email_column'] != users.options['username_column']:
             defaults[users.options["username_column"]] = me.data['login']
 
         return users.oauth_login("github", "github_id", str(me.data['id']), attrs, defaults)
