@@ -64,7 +64,7 @@ class GithubFeature(Feature):
 
         @self.api.tokengetter
         def token_getter():
-            if not current_user.is_authenticated() or not current_user.github_access_token:
+            if not current_user.is_authenticated or not current_user.github_access_token:
                 return
             return (current_user.github_access_token, "")
 
